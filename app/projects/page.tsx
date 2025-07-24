@@ -6,21 +6,18 @@ import { Button } from "@/components/ui/button"
 import {
     ArrowRight,
     Award,
-    BarChart,
-    Building,
     CheckCircle,
-    Grid3X3,
-    List,
-    MapPin,
-    TrendingUp
+    Shield,
+    Sparkles,
+    Target,
+    Users
 } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
 
 export default function ProjectsPage() {
-    const [activeFilter, setActiveFilter] = useState("all")
-    const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
-    const [selectedProject, setSelectedProject] = useState<number | null>(null)
+    const [activeCategory, setActiveCategory] = useState("all")
+    const [featuredProject, setFeaturedProject] = useState(0)
 
     const categories = [
         { id: "all", name: "すべて", count: 15 },
@@ -29,7 +26,7 @@ export default function ProjectsPage() {
         { id: "consulting", name: "コンサルティング", count: 4 },
     ]
 
-    const projects = [
+    const featuredProjects = [
         {
             id: 1,
             title: "A市 スマートシティプロジェクト",
@@ -37,29 +34,15 @@ export default function ProjectsPage() {
             client: "A市",
             year: "2024",
             duration: "12ヶ月",
-            status: "completed",
-            image: "/placeholder.svg?height=400&width=600&text=Smart+City",
-            tags: ["IoT", "ビッグデータ", "AI"],
-            summary: "市内全域にIoTセンサーを設置し、リアルタイムデータ分析による都市運営の最適化を実現",
-            challenge: "増加する都市問題への対応と市民サービスの向上",
-            solution: "IoTセンサーネットワークとAI分析基盤の構築",
-            results: {
+            image: "/placeholder.svg?height=800&width=1200&text=Smart+City",
+            impact: "市民生活を革新的に変える",
+            description: "市内全域にIoTセンサーを設置し、リアルタイムデータ分析による都市運営の最適化を実現。交通、エネルギー、防災など多角的な改善を達成。",
+            stats: {
                 efficiency: "35%",
                 satisfaction: "92%",
-                cost: "25%",
+                cost: "25%削減",
             },
-            achievements: [
-                "交通渋滞を35%削減",
-                "エネルギー消費を20%削減",
-                "市民満足度92%達成",
-                "運営コスト25%削減",
-            ],
             technologies: ["IoTセンサー", "5G通信", "エッジコンピューティング", "機械学習"],
-            testimonial: {
-                text: "AEGIS LLPの支援により、データドリブンな都市運営が実現しました。市民からの評価も高く、大変満足しています。",
-                author: "A市 デジタル推進課長",
-                role: "山田 太郎 様",
-            },
         },
         {
             id: 2,
@@ -68,29 +51,15 @@ export default function ProjectsPage() {
             client: "B県",
             year: "2023",
             duration: "18ヶ月",
-            status: "completed",
-            image: "/placeholder.svg?height=400&width=600&text=Digital+Transform",
-            tags: ["AI", "RPA", "クラウド"],
-            summary: "県庁業務の全面的なデジタル化により、業務効率を大幅に改善",
-            challenge: "紙ベースの業務プロセスと職員の負担増加",
-            solution: "AIとRPAを活用した業務自動化システムの導入",
-            results: {
+            image: "/placeholder.svg?height=800&width=1200&text=Digital+Transform",
+            impact: "働き方と県民サービスを変革",
+            description: "県庁業務の全面的なデジタル化により、業務効率を大幅に改善。AIとRPAを活用した業務自動化で職員の創造的業務へのシフトを実現。",
+            stats: {
                 efficiency: "50%",
                 satisfaction: "95%",
-                time: "60%",
+                time: "60%短縮",
             },
-            achievements: [
-                "事務処理時間を60%短縮",
-                "ペーパーレス化率95%達成",
-                "職員満足度90%向上",
-                "年間コスト3億円削減",
-            ],
             technologies: ["AI-OCR", "RPA", "クラウド基盤", "ワークフロー自動化"],
-            testimonial: {
-                text: "想像以上の成果でした。職員の働き方が大きく改善し、県民サービスの質も向上しました。",
-                author: "B県 情報政策課",
-                role: "佐藤 花子 様",
-            },
         },
         {
             id: 3,
@@ -99,167 +68,112 @@ export default function ProjectsPage() {
             client: "C市",
             year: "2024",
             duration: "8ヶ月",
-            status: "ongoing",
-            image: "/placeholder.svg?height=400&width=600&text=Disaster+Prevention",
-            tags: ["リアルタイム", "IoT", "通知システム"],
-            summary: "最新技術を活用した総合防災情報システムで市民の安全を守る",
-            challenge: "災害時の迅速な情報伝達と避難誘導の最適化",
-            solution: "リアルタイム防災情報プラットフォームの構築",
-            results: {
-                response: "70%",
+            image: "/placeholder.svg?height=800&width=1200&text=Disaster+Prevention",
+            impact: "市民の安全を24時間守る",
+            description: "最新技術を活用した総合防災情報システムで市民の安全を守る。リアルタイムの情報収集と迅速な避難誘導を実現。",
+            stats: {
+                response: "70%向上",
                 coverage: "100%",
                 accuracy: "98%",
             },
-            achievements: [
-                "情報伝達速度70%向上",
-                "市内全域をカバー",
-                "予測精度98%達成",
-                "避難所運営の効率化",
-            ],
             technologies: ["センサーネットワーク", "AI予測", "緊急通知システム", "GIS"],
-            testimonial: {
-                text: "市民の安全を守る強力なシステムができました。災害対応力が格段に向上しました。",
-                author: "C市 危機管理課",
-                role: "鈴木 一郎 様",
-            },
         },
+    ]
+
+    const projectShowcase = [
         {
-            id: 4,
+            id: 1,
             title: "D町 地域活性化DX",
             category: "consulting",
             client: "D町",
             year: "2023",
-            duration: "6ヶ月",
             status: "completed",
-            image: "/placeholder.svg?height=400&width=600&text=Regional+DX",
-            tags: ["地域創生", "デジタル", "観光"],
-            summary: "デジタル技術を活用した地域資源の最大化と観光振興",
-            challenge: "人口減少と地域経済の衰退",
-            solution: "デジタルマーケティングと地域アプリの開発",
-            results: {
-                visitors: "150%",
-                revenue: "45%",
-                engagement: "200%",
-            },
+            image: "/placeholder.svg?height=600&width=800&text=Regional+DX",
+            challenge: "人口減少と地域経済の衰退への対応",
+            solution: "デジタルマーケティングと地域アプリによる観光振興",
             achievements: [
                 "観光客数150%増加",
                 "地域収入45%向上",
                 "住民参加率200%向上",
-                "若年層の関心度上昇",
             ],
-            technologies: ["モバイルアプリ", "AR/VR", "データ分析", "SNS連携"],
-            testimonial: {
-                text: "町に活気が戻ってきました。デジタルの力で地域の魅力を再発見できました。",
-                author: "D町 地域振興課",
-                role: "田中 美香 様",
-            },
         },
         {
-            id: 5,
+            id: 2,
             title: "E市 教育ICTプロジェクト",
             category: "digital",
             client: "E市",
             year: "2024",
-            duration: "10ヶ月",
             status: "ongoing",
-            image: "/placeholder.svg?height=400&width=600&text=Education+ICT",
-            tags: ["教育", "タブレット", "オンライン"],
-            summary: "全市立学校へのICT環境整備と新しい学びの実現",
+            image: "/placeholder.svg?height=600&width=800&text=Education+ICT",
             challenge: "教育の質向上とデジタル格差の解消",
-            solution: "統合教育プラットフォームの導入",
-            results: {
-                adoption: "98%",
-                improvement: "40%",
-                satisfaction: "93%",
-            },
+            solution: "統合教育プラットフォームによる個別最適な学び",
             achievements: [
                 "ICT活用率98%達成",
                 "学習効果40%向上",
                 "教員満足度93%",
-                "保護者評価95%",
             ],
-            technologies: ["学習管理システム", "タブレット端末", "クラウド", "AI学習支援"],
-            testimonial: {
-                text: "子どもたちの学習意欲が向上し、個別最適な学びが実現できています。",
-                author: "E市 教育委員会",
-                role: "高橋 次郎 様",
-            },
         },
         {
-            id: 6,
+            id: 3,
             title: "F県 医療連携ネットワーク",
             category: "infrastructure",
             client: "F県",
             year: "2023",
-            duration: "15ヶ月",
             status: "completed",
-            image: "/placeholder.svg?height=400&width=600&text=Medical+Network",
-            tags: ["医療", "連携", "セキュア"],
-            summary: "県内医療機関を結ぶセキュアな情報共有ネットワーク",
+            image: "/placeholder.svg?height=600&width=800&text=Medical+Network",
             challenge: "医療機関間の情報共有と地域医療の最適化",
             solution: "セキュアな医療情報連携基盤の構築",
-            results: {
-                efficiency: "45%",
-                quality: "35%",
-                security: "100%",
-            },
             achievements: [
                 "診療効率45%向上",
                 "医療の質35%改善",
                 "セキュリティ100%確保",
-                "患者満足度向上",
             ],
-            technologies: ["ブロックチェーン", "暗号化通信", "医療データベース", "AI診断支援"],
-            testimonial: {
-                text: "安全で効率的な医療連携が実現し、県民の健康向上に貢献できています。",
-                author: "F県 医療政策課",
-                role: "渡辺 三郎 様",
-            },
         },
-    ]
-
-    const filteredProjects = projects.filter(project =>
-        activeFilter === "all" || project.category === activeFilter
-    )
-
-    const projectMetrics = [
-        { number: "50+", label: "完了プロジェクト", icon: Building },
-        { number: "15", label: "都道府県", icon: MapPin },
-        { number: "95%", label: "成功率", icon: TrendingUp },
-        { number: "3年", label: "平均ROI回収", icon: BarChart },
     ]
 
     return (
         <div className="min-h-screen bg-white">
             <Header />
 
-            {/* Hero Section with Dynamic Background */}
-            <section className="relative min-h-[600px] flex items-center overflow-hidden">
+            {/* Hero Section with Animated Background */}
+            <section className="relative min-h-[700px] flex items-center overflow-hidden bg-gradient-to-br from-gray-900 via-[#1a365d] to-black">
                 {/* Animated Background Pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900 to-[#1a365d]">
+                <div className="absolute inset-0">
                     <div className="absolute inset-0 opacity-20">
-                        <div className="absolute inset-0" style={{
-                            backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)`,
-                            animation: "slide 20s linear infinite",
-                        }}></div>
+                        <div
+                            className="absolute inset-0"
+                            style={{
+                                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px)`,
+                                animation: "slide 20s linear infinite",
+                            }}
+                        />
                     </div>
                 </div>
 
+                {/* Floating Elements */}
+                <div className="absolute top-20 right-20 w-80 h-80 bg-[#0891b2]/20 rounded-full blur-3xl animate-pulse"></div>
+                <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#0891b2]/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }}></div>
+
                 <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
                     <div className="text-center text-white">
-                        <h1 className="text-5xl lg:text-7xl font-bold mb-6">
-                            プロジェクト実績
+                        <div className="text-sm font-bold tracking-[0.3em] text-[#0891b2] mb-6">PROJECT PORTFOLIO</div>
+                        <h1 className="text-6xl lg:text-8xl font-bold mb-6 leading-tight">
+                            実績が語る<br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0891b2] to-cyan-400">
+                                確かな技術力
+                            </span>
                         </h1>
-                        <p className="text-xl lg:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-                            全国の自治体で実現した<br />
-                            デジタル変革の成功事例をご紹介します
+                        <p className="text-xl lg:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+                            全国50以上の自治体で実現した<br />
+                            デジタル変革の成功事例
                         </p>
-                        <div className="flex flex-wrap gap-4 justify-center">
-                            <Button className="bg-[#0891b2] hover:bg-[#0891b2]/90 text-white px-8 py-3 text-lg">
+                        <div className="flex flex-wrap gap-6 justify-center">
+                            <Button className="bg-[#0891b2] hover:bg-[#0891b2]/90 text-white px-10 py-6 text-lg h-auto">
                                 事例集をダウンロード
+                                <ArrowRight className="ml-2 w-5 h-5" />
                             </Button>
-                            <Button variant="outline" className="border-white text-white hover:bg-white hover:text-black px-8 py-3 text-lg">
-                                お問い合わせ
+                            <Button variant="outline" className="border-white/30 text-white hover:bg-white hover:text-black px-10 py-6 text-lg h-auto backdrop-blur-sm">
+                                プロジェクト相談
                             </Button>
                         </div>
                     </div>
@@ -273,441 +187,356 @@ export default function ProjectsPage() {
         `}</style>
             </section>
 
-            {/* Project Metrics */}
-            <section className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            {/* Impact Numbers */}
+            <section className="py-20 bg-gray-50 relative overflow-hidden">
+                <div className="absolute -top-32 -right-32 text-[300px] font-bold text-gray-100 select-none">50+</div>
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                        {projectMetrics.map((metric, index) => (
-                            <div key={index} className="relative group">
-                                <div className="absolute inset-0 bg-[#0891b2] transform scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-                                <div className="relative bg-gray-50 p-8 text-center">
-                                    <metric.icon className="w-12 h-12 text-[#0891b2] group-hover:text-white mx-auto mb-4 transition-colors" />
-                                    <div className="text-3xl font-bold text-black group-hover:text-white transition-colors">
-                                        {metric.number}
+                        <div className="text-center">
+                            <div className="text-5xl font-bold text-[#0891b2] mb-2">50+</div>
+                            <div className="text-gray-600">完了プロジェクト</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-5xl font-bold text-[#0891b2] mb-2">15</div>
+                            <div className="text-gray-600">都道府県</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-5xl font-bold text-[#0891b2] mb-2">95%</div>
+                            <div className="text-gray-600">成功率</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-5xl font-bold text-[#0891b2] mb-2">3年</div>
+                            <div className="text-gray-600">平均ROI回収</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Featured Projects - Large Showcase */}
+            <section className="py-32 bg-white relative overflow-hidden">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="text-center mb-20">
+                        <h2 className="text-5xl font-bold text-black mb-4">
+                            注目プロジェクト
+                        </h2>
+                        <div className="w-24 h-1 bg-gradient-to-r from-[#0891b2] to-cyan-400 mx-auto"></div>
+                    </div>
+
+                    {/* Featured Project Display */}
+                    {featuredProjects.map((project, index) => (
+                        <div
+                            key={project.id}
+                            className={`mb-32 last:mb-0 ${index === featuredProject ? "block" : "hidden"}`}
+                        >
+                            <div className={`flex flex-col ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} items-center gap-16`}>
+                                {/* Image Section */}
+                                <div className="flex-1 relative group">
+                                    <div className="absolute -inset-4 bg-gradient-to-r from-[#0891b2] to-cyan-400 opacity-0 group-hover:opacity-20 blur-2xl transition-all duration-500"></div>
+                                    <div className="relative overflow-hidden">
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            width={1200}
+                                            height={800}
+                                            className="w-full object-cover shadow-2xl group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                        <div className="absolute top-8 left-8">
+                                            <span className="bg-[#0891b2] text-white px-6 py-2 text-sm font-bold">
+                                                {project.year}年 {project.duration}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div className="text-gray-600 group-hover:text-white transition-colors">
-                                        {metric.label}
+                                </div>
+
+                                {/* Content Section */}
+                                <div className="flex-1 relative">
+                                    <div className="absolute -top-20 -left-10 text-[150px] font-bold text-gray-100 select-none">
+                                        0{index + 1}
+                                    </div>
+                                    <div className="relative z-10">
+                                        <div className="text-[#0891b2] font-bold mb-2">{project.client}</div>
+                                        <h3 className="text-4xl font-bold text-black mb-4">{project.title}</h3>
+                                        <p className="text-2xl text-gray-700 mb-6">{project.impact}</p>
+                                        <p className="text-gray-600 mb-8 leading-relaxed">
+                                            {project.description}
+                                        </p>
+
+                                        {/* Stats Grid */}
+                                        <div className="grid grid-cols-3 gap-6 mb-8">
+                                            <div className="bg-gray-50 p-4">
+                                                <div className="text-3xl font-bold text-[#0891b2]">{project.stats.efficiency}</div>
+                                                <div className="text-sm text-gray-600">効率向上</div>
+                                            </div>
+                                            <div className="bg-gray-50 p-4">
+                                                <div className="text-3xl font-bold text-[#0891b2]">{project.stats.satisfaction}</div>
+                                                <div className="text-sm text-gray-600">満足度</div>
+                                            </div>
+                                            <div className="bg-gray-50 p-4">
+                                                <div className="text-3xl font-bold text-[#0891b2]">{project.stats.cost}</div>
+                                                <div className="text-sm text-gray-600">コスト</div>
+                                            </div>
+                                        </div>
+
+                                        {/* Technologies */}
+                                        <div className="flex flex-wrap gap-3">
+                                            {project.technologies.map((tech, i) => (
+                                                <span key={i} className="bg-[#0891b2]/10 text-[#0891b2] px-4 py-2 font-medium">
+                                                    {tech}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    ))}
+
+                    {/* Project Navigation */}
+                    <div className="flex justify-center gap-4 mt-12">
+                        {featuredProjects.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setFeaturedProject(index)}
+                                className={`w-16 h-1 transition-all ${index === featuredProject ? "bg-[#0891b2]" : "bg-gray-300"
+                                    }`}
+                            />
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* Project Filter and Grid */}
-            <section className="py-20 bg-gray-50">
+            {/* Category Filter Section */}
+            <section className="py-16 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    {/* Filter Bar */}
-                    <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12">
-                        <div className="mb-6 lg:mb-0">
-                            <h2 className="text-3xl font-bold text-black mb-4">プロジェクト一覧</h2>
-                            <div className="flex flex-wrap gap-3">
-                                {categories.map((category) => (
-                                    <button
-                                        key={category.id}
-                                        onClick={() => setActiveFilter(category.id)}
-                                        className={`px-6 py-2 font-medium transition-all ${activeFilter === category.id
-                                                ? "bg-[#0891b2] text-white"
-                                                : "bg-white text-gray-700 hover:bg-gray-100"
-                                            }`}
-                                    >
-                                        {category.name} ({category.count})
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* View Mode Toggle */}
-                        <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-4 justify-center">
+                        {categories.map((category) => (
                             <button
-                                onClick={() => setViewMode("grid")}
-                                className={`p-2 ${viewMode === "grid" ? "bg-[#0891b2] text-white" : "bg-white text-gray-700"}`}
+                                key={category.id}
+                                onClick={() => setActiveCategory(category.id)}
+                                className={`px-8 py-3 font-medium transition-all ${activeCategory === category.id
+                                        ? "bg-[#0891b2] text-white shadow-lg transform -translate-y-1"
+                                        : "bg-white text-gray-700 hover:shadow-md"
+                                    }`}
                             >
-                                <Grid3X3 className="w-5 h-5" />
+                                {category.name} ({category.count})
                             </button>
-                            <button
-                                onClick={() => setViewMode("list")}
-                                className={`p-2 ${viewMode === "list" ? "bg-[#0891b2] text-white" : "bg-white text-gray-700"}`}
-                            >
-                                <List className="w-5 h-5" />
-                            </button>
-                        </div>
+                        ))}
                     </div>
+                </div>
+            </section>
 
-                    {/* Projects Grid/List */}
-                    {viewMode === "grid" ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {filteredProjects.map((project) => (
+            {/* Project Showcase - Large Cards */}
+            <section className="py-20 bg-white">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="space-y-24">
+                        {projectShowcase
+                            .filter(project => activeCategory === "all" || project.category === activeCategory)
+                            .map((project, index) => (
                                 <div
                                     key={project.id}
-                                    className="bg-white shadow-lg hover:shadow-xl transition-all cursor-pointer group"
-                                    onClick={() => setSelectedProject(project.id)}
+                                    className={`flex flex-col ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} items-stretch gap-0 shadow-2xl overflow-hidden`}
                                 >
-                                    <div className="relative h-48 overflow-hidden">
+                                    {/* Image Section */}
+                                    <div className="lg:w-1/2 relative h-96 lg:h-auto">
                                         <Image
                                             src={project.image}
                                             alt={project.title}
-                                            width={600}
-                                            height={400}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                            width={800}
+                                            height={600}
+                                            className="absolute inset-0 w-full h-full object-cover"
                                         />
-                                        <div className="absolute top-4 right-4">
-                                            <span className={`px-3 py-1 text-xs font-semibold text-white ${project.status === "completed" ? "bg-green-600" : "bg-[#0891b2]"
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                        <div className="absolute bottom-8 left-8">
+                                            <span className={`px-4 py-2 text-sm font-bold text-white ${project.status === "completed" ? "bg-green-600" : "bg-[#0891b2]"
                                                 }`}>
                                                 {project.status === "completed" ? "完了" : "進行中"}
                                             </span>
                                         </div>
                                     </div>
 
-                                    <div className="p-6">
-                                        <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                                            <span>{project.client}</span>
+                                    {/* Content Section */}
+                                    <div className="lg:w-1/2 bg-gray-50 p-12 flex flex-col justify-center">
+                                        <div className="flex items-center gap-4 text-sm text-gray-500 mb-4">
+                                            <span className="font-bold text-[#0891b2]">{project.client}</span>
                                             <span>•</span>
-                                            <span>{project.year}</span>
-                                            <span>•</span>
-                                            <span>{project.duration}</span>
+                                            <span>{project.year}年</span>
                                         </div>
 
-                                        <h3 className="text-xl font-bold text-black mb-3 group-hover:text-[#0891b2] transition-colors">
+                                        <h3 className="text-3xl font-bold text-black mb-6">
                                             {project.title}
                                         </h3>
 
-                                        <p className="text-gray-600 mb-4 line-clamp-2">
-                                            {project.summary}
-                                        </p>
+                                        <div className="mb-8">
+                                            <h4 className="font-bold text-gray-700 mb-2">課題</h4>
+                                            <p className="text-gray-600">{project.challenge}</p>
+                                        </div>
 
-                                        <div className="flex flex-wrap gap-2 mb-4">
-                                            {project.tags.map((tag, index) => (
-                                                <span key={index} className="px-2 py-1 bg-gray-100 text-xs text-gray-700">
-                                                    {tag}
-                                                </span>
+                                        <div className="mb-8">
+                                            <h4 className="font-bold text-gray-700 mb-2">ソリューション</h4>
+                                            <p className="text-gray-600">{project.solution}</p>
+                                        </div>
+
+                                        <div className="space-y-3 mb-8">
+                                            {project.achievements.map((achievement, i) => (
+                                                <div key={i} className="flex items-center">
+                                                    <CheckCircle className="w-5 h-5 text-[#0891b2] mr-3 flex-shrink-0" />
+                                                    <span className="text-gray-700">{achievement}</span>
+                                                </div>
                                             ))}
                                         </div>
 
-                                        <div className="flex items-center text-[#0891b2] font-semibold">
+                                        <Button className="bg-black hover:bg-gray-900 text-white self-start">
                                             詳細を見る
-                                            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="space-y-6">
-                            {filteredProjects.map((project) => (
-                                <div
-                                    key={project.id}
-                                    className="bg-white shadow-lg hover:shadow-xl transition-all cursor-pointer"
-                                    onClick={() => setSelectedProject(project.id)}
-                                >
-                                    <div className="flex flex-col lg:flex-row">
-                                        <div className="lg:w-1/3 h-64 lg:h-auto relative">
-                                            <Image
-                                                src={project.image}
-                                                alt={project.title}
-                                                width={600}
-                                                height={400}
-                                                className="w-full h-full object-cover"
-                                            />
-                                            <div className="absolute top-4 left-4">
-                                                <span className={`px-3 py-1 text-xs font-semibold text-white ${project.status === "completed" ? "bg-green-600" : "bg-[#0891b2]"
-                                                    }`}>
-                                                    {project.status === "completed" ? "完了" : "進行中"}
-                                                </span>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex-1 p-8">
-                                            <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                                                <span>{project.client}</span>
-                                                <span>•</span>
-                                                <span>{project.year}</span>
-                                                <span>•</span>
-                                                <span>{project.duration}</span>
-                                            </div>
-
-                                            <h3 className="text-2xl font-bold text-black mb-3">
-                                                {project.title}
-                                            </h3>
-
-                                            <p className="text-gray-600 mb-4">
-                                                {project.summary}
-                                            </p>
-
-                                            <div className="flex flex-wrap gap-2 mb-6">
-                                                {project.tags.map((tag, index) => (
-                                                    <span key={index} className="px-3 py-1 bg-gray-100 text-sm text-gray-700">
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-
-                                            <div className="grid grid-cols-3 gap-4 mb-6">
-                                                <div>
-                                                    <div className="text-2xl font-bold text-[#0891b2]">
-                                                        {project.results.efficiency || project.results.response || project.results.visitors}
-                                                    </div>
-                                                    <div className="text-sm text-gray-600">効率向上</div>
-                                                </div>
-                                                <div>
-                                                    <div className="text-2xl font-bold text-[#0891b2]">
-                                                        {project.results.satisfaction || project.results.coverage || project.results.revenue}
-                                                    </div>
-                                                    <div className="text-sm text-gray-600">満足度</div>
-                                                </div>
-                                                <div>
-                                                    <div className="text-2xl font-bold text-[#0891b2]">
-                                                        {project.results.cost || project.results.accuracy || project.results.engagement}
-                                                    </div>
-                                                    <div className="text-sm text-gray-600">
-                                                        {project.category === "infrastructure" ? "精度" :
-                                                            project.category === "consulting" ? "エンゲージメント" : "コスト削減"}
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <Button className="bg-[#0891b2] hover:bg-[#0891b2]/90 text-white">
-                                                詳細を見る
-                                                <ArrowRight className="w-4 h-4 ml-2" />
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </section>
-
-            {/* Featured Project Detail with Video Background */}
-            {selectedProject && (
-                <section className="py-20 relative overflow-hidden">
-                    <video
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="absolute inset-0 w-full h-full object-cover"
-                    >
-                        <source src="/sample.mp4" type="video/mp4" />
-                    </video>
-                    <div className="absolute inset-0 bg-black/80"></div>
-
-                    <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-                        {(() => {
-                            const project = projects.find(p => p.id === selectedProject)
-                            if (!project) return null
-
-                            return (
-                                <div className="text-white">
-                                    <div className="text-center mb-12">
-                                        <h2 className="text-4xl font-bold mb-4">注目プロジェクト</h2>
-                                        <p className="text-xl text-gray-300">{project.title}</p>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                                        <div>
-                                            <div className="mb-8">
-                                                <h3 className="text-2xl font-bold mb-4">課題</h3>
-                                                <p className="text-gray-300">{project.challenge}</p>
-                                            </div>
-
-                                            <div className="mb-8">
-                                                <h3 className="text-2xl font-bold mb-4">ソリューション</h3>
-                                                <p className="text-gray-300">{project.solution}</p>
-                                            </div>
-
-                                            <div>
-                                                <h3 className="text-2xl font-bold mb-4">活用技術</h3>
-                                                <div className="flex flex-wrap gap-3">
-                                                    {project.technologies.map((tech, index) => (
-                                                        <span key={index} className="px-4 py-2 bg-white/10 backdrop-blur">
-                                                            {tech}
-                                                        </span>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div className="mb-8">
-                                                <h3 className="text-2xl font-bold mb-4">成果</h3>
-                                                <div className="space-y-3">
-                                                    {project.achievements.map((achievement, index) => (
-                                                        <div key={index} className="flex items-center">
-                                                            <CheckCircle className="w-5 h-5 text-[#0891b2] mr-3 flex-shrink-0" />
-                                                            <span>{achievement}</span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                            <div className="bg-white/10 backdrop-blur p-6">
-                                                <p className="text-lg mb-4 italic">"{project.testimonial.text}"</p>
-                                                <div>
-                                                    <div className="font-bold">{project.testimonial.role}</div>
-                                                    <div className="text-sm text-gray-300">{project.testimonial.author}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="text-center mt-12">
-                                        <Button
-                                            variant="outline"
-                                            className="border-white text-white hover:bg-white hover:text-black"
-                                            onClick={() => setSelectedProject(null)}
-                                        >
-                                            プロジェクト一覧に戻る
+                                            <ArrowRight className="ml-2 w-4 h-4" />
                                         </Button>
                                     </div>
                                 </div>
-                            )
-                        })()}
-                    </div>
-                </section>
-            )}
-
-            {/* Success Stories Carousel */}
-            <section className="py-20 bg-white">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-black mb-4">
-                            お客様の声
-                        </h2>
-                        <p className="text-xl text-gray-600">
-                            プロジェクトを通じて実現した変革の声
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {projects.slice(0, 3).map((project) => (
-                            <div key={project.id} className="bg-gray-50 p-8 relative">
-                                <div className="absolute top-4 right-4 text-6xl text-gray-200">"</div>
-                                <div className="relative z-10">
-                                    <div className="flex items-center mb-4">
-                                        <Award className="w-8 h-8 text-[#0891b2] mr-3" />
-                                        <div>
-                                            <div className="font-bold text-black">{project.client}</div>
-                                            <div className="text-sm text-gray-600">{project.category === "digital" ? "デジタル変革" : project.category === "infrastructure" ? "インフラ" : "コンサルティング"}</div>
-                                        </div>
-                                    </div>
-                                    <p className="text-gray-700 mb-6 line-clamp-3">
-                                        {project.testimonial.text}
-                                    </p>
-                                    <div className="border-t border-gray-300 pt-4">
-                                        <div className="font-semibold text-black">{project.testimonial.role}</div>
-                                        <div className="text-sm text-gray-600">{project.testimonial.author}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
                 </div>
             </section>
 
-            {/* Project Timeline */}
-            <section className="py-20 bg-gray-50">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-bold text-black mb-4">
-                            プロジェクトの流れ
-                        </h2>
-                        <p className="text-xl text-gray-600">
-                            ご相談から運用開始まで、確実なプロジェクト遂行
-                        </p>
+            {/* Mission Statement Section */}
+            <section className="py-32 bg-gradient-to-br from-[#0891b2] to-[#0e7490] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10">
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `radial-gradient(circle at 50% 50%, white 0%, transparent 50%)`,
+                        animation: "pulse 4s ease-in-out infinite",
+                    }}></div>
+                </div>
+
+                <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 className="text-5xl font-bold text-white mb-8 leading-tight">
+                                目指すのは、<br />
+                                「すべての自治体が<br />
+                                デジタルで輝く<br />
+                                未来の実現」
+                            </h2>
+                            <p className="text-white/90 text-lg leading-relaxed mb-10">
+                                私たちは創業以来、地方自治体のデジタル変革に特化した専門家集団として、
+                                日本全国の自治体が最新技術を活用して市民により良いサービスを提供できる社会の実現に取り組んでいます。
+                            </p>
+                            <Button
+                                size="lg"
+                                className="bg-white text-[#0891b2] hover:bg-gray-100 px-8 py-4 text-lg font-semibold"
+                            >
+                                AEGIS LLPの強みへ
+                                <ArrowRight className="ml-2 w-5 h-5" />
+                            </Button>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-6">
+                            <div className="space-y-6">
+                                <div className="bg-white/10 backdrop-blur p-6 transform hover:scale-105 transition-transform">
+                                    <Target className="w-10 h-10 text-white mb-3" />
+                                    <h3 className="text-xl font-bold text-white mb-2">課題解決力</h3>
+                                    <p className="text-white/80 text-sm">複雑な行政課題を技術で解決</p>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur p-6 transform hover:scale-105 transition-transform">
+                                    <Users className="w-10 h-10 text-white mb-3" />
+                                    <h3 className="text-xl font-bold text-white mb-2">専門家集団</h3>
+                                    <p className="text-white/80 text-sm">9社の専門企業による総合力</p>
+                                </div>
+                            </div>
+                            <div className="space-y-6 mt-12">
+                                <div className="bg-white/10 backdrop-blur p-6 transform hover:scale-105 transition-transform">
+                                    <Sparkles className="w-10 h-10 text-white mb-3" />
+                                    <h3 className="text-xl font-bold text-white mb-2">革新的技術</h3>
+                                    <p className="text-white/80 text-sm">最新のAI・IoT技術を活用</p>
+                                </div>
+                                <div className="bg-white/10 backdrop-blur p-6 transform hover:scale-105 transition-transform">
+                                    <Shield className="w-10 h-10 text-white mb-3" />
+                                    <h3 className="text-xl font-bold text-white mb-2">確実な実行</h3>
+                                    <p className="text-white/80 text-sm">95%の高い成功率を誇る</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Client Testimonials - Large Format */}
+            <section className="py-32 bg-gray-50 relative overflow-hidden">
+                <div className="absolute -top-20 -right-20 w-96 h-96 bg-[#0891b2]/5 rounded-full"></div>
+                <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#0891b2]/5 rounded-full"></div>
+
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                    <div className="text-center mb-20">
+                        <div className="text-7xl font-thin tracking-widest text-gray-300 mb-4">VOICE</div>
+                        <h2 className="text-4xl font-bold text-black">お客様の声</h2>
                     </div>
 
-                    <div className="relative">
-                        {/* Timeline Line */}
-                        <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gray-300"></div>
-
-                        {/* Timeline Items */}
-                        <div className="space-y-12">
-                            {[
-                                {
-                                    step: 1,
-                                    title: "ヒアリング・課題分析",
-                                    duration: "1-2週間",
-                                    description: "お客様の現状と課題を詳しくお聞きし、最適なソリューションを検討します"
-                                },
-                                {
-                                    step: 2,
-                                    title: "提案・計画策定",
-                                    duration: "2-3週間",
-                                    description: "課題解決に向けた具体的な提案と実行計画を策定します"
-                                },
-                                {
-                                    step: 3,
-                                    title: "開発・実装",
-                                    duration: "3-6ヶ月",
-                                    description: "段階的な開発と検証を重ねながら、着実にシステムを構築します"
-                                },
-                                {
-                                    step: 4,
-                                    title: "テスト・移行",
-                                    duration: "1-2ヶ月",
-                                    description: "十分なテストを実施し、スムーズな本番移行を実現します"
-                                },
-                                {
-                                    step: 5,
-                                    title: "運用・サポート",
-                                    duration: "継続",
-                                    description: "24/7のサポート体制で、安定した運用を支援します"
-                                },
-                            ].map((item, index) => (
-                                <div key={index} className={`flex items-center ${index % 2 === 0 ? "flex-row" : "flex-row-reverse"}`}>
-                                    <div className="flex-1">
-                                        <div className={`bg-white p-6 shadow-lg ${index % 2 === 0 ? "mr-8 text-right" : "ml-8"}`}>
-                                            <div className="text-sm text-[#0891b2] font-semibold mb-2">{item.duration}</div>
-                                            <h3 className="text-xl font-bold text-black mb-2">{item.title}</h3>
-                                            <p className="text-gray-600">{item.description}</p>
-                                        </div>
+                    <div className="space-y-16">
+                        <div className="bg-white p-12 shadow-xl relative">
+                            <div className="absolute -top-8 left-12 text-8xl text-[#0891b2]/20 font-serif">"</div>
+                            <div className="relative z-10">
+                                <p className="text-2xl text-gray-700 mb-8 leading-relaxed">
+                                    AEGIS LLPの支援により、データドリブンな都市運営が実現しました。
+                                    市民からの評価も高く、職員のモチベーションも向上しています。
+                                    これからの自治体運営に欠かせないパートナーです。
+                                </p>
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <div className="font-bold text-lg text-black">A市 デジタル推進課長</div>
+                                        <div className="text-gray-600">山田 太郎 様</div>
                                     </div>
-
-                                    <div className="relative z-10">
-                                        <div className="w-12 h-12 bg-[#0891b2] text-white flex items-center justify-center font-bold text-lg">
-                                            {item.step}
-                                        </div>
-                                    </div>
-
-                                    <div className="flex-1"></div>
+                                    <Award className="w-16 h-16 text-[#0891b2]" />
                                 </div>
-                            ))}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="bg-white p-8 shadow-lg">
+                                <p className="text-gray-700 mb-6">
+                                    想像以上の成果でした。職員の働き方が大きく改善し、県民サービスの質も向上しました。
+                                </p>
+                                <div className="border-t pt-4">
+                                    <div className="font-bold text-black">B県 情報政策課</div>
+                                    <div className="text-sm text-gray-600">佐藤 花子 様</div>
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-8 shadow-lg">
+                                <p className="text-gray-700 mb-6">
+                                    市民の安全を守る強力なシステムができました。災害対応力が格段に向上しました。
+                                </p>
+                                <div className="border-t pt-4">
+                                    <div className="font-bold text-black">C市 危機管理課</div>
+                                    <div className="text-sm text-gray-600">鈴木 一郎 様</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-[#0891b2] relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute inset-0" style={{
-                        backgroundImage: `repeating-linear-gradient(-45deg, #fff 0, #fff 1px, transparent 1px, transparent 40px)`,
-                    }}></div>
-                </div>
+            <section className="py-24 bg-black relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0891b2]/20 to-transparent"></div>
 
                 <div className="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
-                    <h2 className="text-4xl font-bold text-white mb-6">
+                    <h2 className="text-5xl font-bold text-white mb-8">
                         次はあなたの自治体で<br />
                         成功を実現しませんか？
                     </h2>
-                    <p className="text-xl text-white/90 mb-12">
+                    <p className="text-xl text-gray-300 mb-12">
                         豊富な実績と確かな技術力で、貴自治体のデジタル変革を支援します
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
                         <Button
                             size="lg"
-                            className="bg-white text-[#0891b2] hover:bg-gray-100 px-8 py-4 text-lg font-semibold"
+                            className="bg-[#0891b2] hover:bg-[#0891b2]/90 text-white px-10 py-6 text-lg font-semibold"
                         >
                             プロジェクト相談を申し込む
+                            <ArrowRight className="ml-2 w-5 h-5" />
                         </Button>
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-[#0891b2] px-8 py-4 text-lg font-semibold"
+                            className="border-white/30 text-white hover:bg-white hover:text-black px-10 py-6 text-lg font-semibold backdrop-blur-sm"
                         >
                             事例集をダウンロード
                         </Button>
